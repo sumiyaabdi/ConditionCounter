@@ -52,4 +52,4 @@ You will be evaluated on the critera below.
 - Anything else. 0 pts
 
 ## Submitting a solution
-Please commit all code into this repository ueing git, create a zip file and return via email.
+Please commit all code into this repository using git, create a zip file and return via email.
