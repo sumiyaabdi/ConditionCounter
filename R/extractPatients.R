@@ -1,12 +1,7 @@
-#' Get condition occurrence data.frame from CDM connection
-#'
-#' @param connection A DatabaseConnector connection object
-#' @param cdmSchema
-#'
-#' @returns
-#' @export
-#'
-#' @examples
+#' @importFrom DatabaseConnector querySql
+#' @importFrom SqlRender render translate
+#' @importFrom stats aggregate
+
 getConditionOccurrence <- function(connection, cdmSchema = NULL) {
   if (is.null(cdmSchema)) {
     sql <- "
@@ -23,14 +18,14 @@ getConditionOccurrence <- function(connection, cdmSchema = NULL) {
         condition_start_date
       FROM @cdmSchema.condition_occurrence;
     "
-    rendered <- SqlRender::render(sql, cdmSchema = cdmSchema)
+    rendered <- render(sql, cdmSchema = cdmSchema)
   }
-  translated <- SqlRender::translate(
+  translated <- translate(
     sql = rendered,
     targetDialect = connection@dbms
   )
 
-  DatabaseConnector::querySql(connection, translated)
+  querySql(connection, translated)
 }
 
 processDates <- function(df) {
@@ -52,18 +47,22 @@ countPatients <- function(df) {
   )
 }
 
-#' get condition occurrences from databse
+#' Get condition_occurrence table from OMOP CDM connection
 #'
-#' @param connection DatabaseConnector connection
+#' #' Retrieves the `condition_occurrence` table (or selected columns)
+#' from a connected OMOP CDM database.
+#' SQL is translated using `SqlRender`, allowing support for multiple SQL dialects.
 #'
-#' This function takes a database connection as input, and extract counts of all conditions by year and month from the condition occurence table in the OMOP CDM database. The function is able to do this for different sql dialects using the SqlRender R package. It should return a data.frame with columns condition_concept_id, year, month, and n_patients
+#' @param connection A DatabaseConnector connection object
+#' @param cdmSchema Optional. A schema name.
 #'
-#' @returns data.frame with columns: condition_concept_id, year, month, and n_patients
+#' @returns A data.frame with columns `condition_concept_id`, `year`, `month`, `n_patients`
 #' @export
 #'
 #' @examples
-extractPatients <- function(connection) {
-  df <- getConditionOccurrence(connection)
+#' df <- getConditionOccurrence(connection)
+extractPatients <- function(connection, cdmSchema = NULL) {
+  df <- getConditionOccurrence(connection, cdmSchema = cdmSchema)
   df <- processDates(df)
   df_counts <- countPatients(df)
   return(df_counts)
