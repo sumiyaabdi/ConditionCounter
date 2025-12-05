@@ -10,4 +10,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports:
   DatabaseConnector,
-  SqlRender
+  SqlRender,
+  stats
+Suggests: 
+    testthat (>= 3.0.0),
+    Eunomia
+Config/testthat/edition: 3

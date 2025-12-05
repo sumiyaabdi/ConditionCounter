@@ -1,7 +1,3 @@
-#' @importFrom DatabaseConnector querySql
-#' @importFrom SqlRender render translate
-#' @importFrom stats aggregate
-
 getConditionOccurrence <- function(connection, cdmSchema = NULL) {
   if (is.null(cdmSchema)) {
     sql <- "
@@ -18,14 +14,14 @@ getConditionOccurrence <- function(connection, cdmSchema = NULL) {
         condition_start_date
       FROM @cdmSchema.condition_occurrence;
     "
-    rendered <- render(sql, cdmSchema = cdmSchema)
+    rendered <- SqlRender::render(sql, cdmSchema = cdmSchema)
   }
-  translated <- translate(
+  translated <- SqlRender::translate(
     sql = rendered,
     targetDialect = connection@dbms
   )
 
-  querySql(connection, translated)
+  DatabaseConnector::querySql(connection, translated)
 }
 
 processDates <- function(df) {
@@ -36,7 +32,7 @@ processDates <- function(df) {
 }
 
 countPatients <- function(df) {
-  aggregate(
+  stats::aggregate(
     x = list(n_patients = df$condition_concept_id),
     by = list(
       condition_concept_id = df$condition_concept_id,
