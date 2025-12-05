@@ -1,6 +1,4 @@
 test_that("getConditionOccurrence has correct columns", {
-  skip_on_cran()
-
   connectionDetails <- Eunomia::getEunomiaConnectionDetails()
   connection <- DatabaseConnector::connect(connectionDetails)
 
@@ -13,8 +11,6 @@ test_that("getConditionOccurrence has correct columns", {
 })
 
 test_that("extractPatients returns counts", {
-  skip_on_cran()
-
   connectionDetails <- Eunomia::getEunomiaConnectionDetails()
   conn <- DatabaseConnector::connect(connectionDetails)
 
