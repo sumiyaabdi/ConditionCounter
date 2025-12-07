@@ -14,7 +14,7 @@ Imports:
   SqlRender,
   stats,
   ggplot2,
-  dplyr
+  dplyr,
 Suggests: 
     testthat (>= 3.0.0),
     Eunomia

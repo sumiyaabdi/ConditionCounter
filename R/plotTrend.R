@@ -3,7 +3,7 @@
 #' Internal helper that cleans and aggregates condition occurrence counts
 #' prior to plotting. Most users should instead call [plotTrend()].
 #'
-#' @param extractedCounts A data.frame containing the columns:
+#' @param data A data.frame containing the columns:
 #'   `condition_concept_id`, `year`, `month`, `n_patients`.
 #' @param byMonth Logical. If TRUE, output one row per year-month combination.
 #'   If FALSE, rows are aggregated by year.
@@ -13,28 +13,26 @@
 #'   and `condition_concept_id`.
 #'
 #' @keywords internal
-prepareTrendData <- function(extractedCounts,
+prepareTrendData <- function(data,
                              byMonth = FALSE,
                              conditionConceptId = NULL) {
   # assert columns are in input
-  stopifnot(
-    all(c("condition_concept_id", "year", "month", "n_patients") %in% names(extractedCounts))
-  )
+  stopifnot(all(c("condition_concept_id", "year", "month", "n_patients") %in% names(data)))
 
   # filter dataframe if specified
   if (!is.null(conditionConceptId)) {
-    extractedCounts <- extractedCounts |>
+    data <- data |>
       dplyr::filter(condition_concept_id %in% conditionConceptId)
   }
 
   # prep data to either be by month or year
   if (byMonth) {
-    plotDf <- extractedCounts |>
+    plotDf <- data |>
       dplyr::mutate(x = paste(year, month, sep = "_")) |>
       dplyr::select(x, n_patients, condition_concept_id)
   }
   else {
-    plotDf <- extractedCounts |>
+    plotDf <- data |>
       dplyr::group_by(condition_concept_id, year) |>
       dplyr::summarise(n_patients = sum(n_patients), .groups = "drop") |>
       dplyr::mutate(x = year) |>
@@ -107,7 +105,7 @@ plotTrend <- function(data,
                       conditionConceptId = NULL) {
 
   plotDf <- prepareTrendData(
-    extractedCounts = data,
+    data = data,
     byMonth = byMonth,
     conditionConceptId = conditionConceptId
   )

@@ -4,10 +4,10 @@
 \alias{prepareTrendData}
 \title{Prepare trend data for plotting}
 \usage{
-prepareTrendData(extractedCounts, byMonth = FALSE, conditionConceptId = NULL)
+prepareTrendData(data, byMonth = FALSE, conditionConceptId = NULL)
 }
 \arguments{
-\item{extractedCounts}{A data.frame containing the columns:
+\item{data}{A data.frame containing the columns:
 \code{condition_concept_id}, \code{year}, \code{month}, \code{n_patients}.}
 
 \item{byMonth}{Logical. If TRUE, output one row per year-month combination.
