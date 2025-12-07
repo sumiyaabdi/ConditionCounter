@@ -7,14 +7,14 @@ test_that("getConditionOccurrence has correct columns", {
   expect_true(is.data.frame(df))
   expect_true(all(c("condition_concept_id", "condition_start_date") %in% colnames(df)))
   expect_true(nrow(df) > 0)
-  disconnect(connection)
+  DatabaseConnector::disconnect(connection)
 })
 
 test_that("extractPatients returns counts", {
   connectionDetails <- Eunomia::getEunomiaConnectionDetails()
-  conn <- DatabaseConnector::connect(connectionDetails)
+  connection <- DatabaseConnector::connect(connectionDetails)
 
-  df <- extractPatients(conn)
+  df <- extractPatients(connection)
 
   expect_true(is.data.frame(df))
   expect_true(all(c("condition_concept_id", "year", "month", "n_patients") %in% colnames(df)))
@@ -23,5 +23,5 @@ test_that("extractPatients returns counts", {
   expect_true(all(df$n_patients > 0))
   expect_true(nrow(df) > 0)
 
-  disconnect(connection)
+  DatabaseConnector::disconnect(connection)
 })

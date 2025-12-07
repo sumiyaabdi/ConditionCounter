@@ -1,25 +1,116 @@
-plotTrend <- function(extractedCounts, byMonth = FALSE, condition_concept_id = NULL) {
+#' Prepare trend data for plotting
+#'
+#' Internal helper that cleans and aggregates condition occurrence counts
+#' prior to plotting. Most users should instead call [plotTrend()].
+#'
+#' @param extractedCounts A data.frame containing the columns:
+#'   `condition_concept_id`, `year`, `month`, `n_patients`.
+#' @param byMonth Logical. If TRUE, output one row per year-month combination.
+#'   If FALSE, rows are aggregated by year.
+#' @param conditionConceptId Optional vector of condition concept IDs to filter.
+#'
+#' @return A data.frame containing `x`, `n_patients`,
+#'   and `condition_concept_id`.
+#'
+#' @keywords internal
+prepareTrendData <- function(extractedCounts,
+                             byMonth = FALSE,
+                             conditionConceptId = NULL) {
+  # assert columns are in input
   stopifnot(
     all(c("condition_concept_id", "year", "month", "n_patients") %in% names(extractedCounts))
-    )
+  )
 
-  if (!is.null(condition_concept_id)) {
-    extractedCounts <- extractedCounts[extractedCounts['condition_concept_id'] == condition_concept_id, ]
+  # filter dataframe if specified
+  if (!is.null(conditionConceptId)) {
+    extractedCounts <- extractedCounts |>
+      dplyr::filter(condition_concept_id %in% conditionConceptId)
   }
 
+  # prep data to either be by month or year
   if (byMonth) {
-    extractedCounts$year_month <- paste(extractedCounts$year, extractedCounts$month, sep = "_")
-    xlabel <- "year_month"
+    plotDf <- extractedCounts |>
+      dplyr::mutate(x = paste(year, month, sep = "_")) |>
+      dplyr::select(x, n_patients, condition_concept_id)
   }
   else {
-    extractedCounts <- extractedCounts |>
+    plotDf <- extractedCounts |>
       dplyr::group_by(condition_concept_id, year) |>
-      dplyr::summarise(n_patients = sum(n_patients), .groups = "drop")
-
-    xlabel <- "year"
+      dplyr::summarise(n_patients = sum(n_patients), .groups = "drop") |>
+      dplyr::mutate(x = year) |>
+      dplyr::select(x, n_patients, condition_concept_id)
   }
 
-  ggplot(data = extractedCounts, aes(x = year, y = n_patients, color = condition_concept_id, group = condition_concept_id)) +
-    geom_line() +
-    geom_point() +
+  return(plotDf)
+}
+
+#' Plot prepared trend data
+#'
+#' Internal helper used by [plotTrend()]. Produces a ggplot time-trend
+#' visualization from data prepared by [prepareTrendData()].
+#'
+#' @param plotDf A data.frame produced by [prepareTrendData()].
+#'
+#' @return A ggplot object.
+#'
+#' @keywords internal
+plotPreparedData <- function(plotDf) {
+
+  ggplot2::ggplot(
+    data = plotDf,
+    ggplot2::aes(x = .data$x,
+                 y = .data$n_patients,
+                 color = .data$condition_concept_id,
+                 group = .data$condition_concept_id)
+    ) +
+    ggplot2::geom_line() +
+    ggplot2::geom_point() +
+    ggplot2::theme_minimal() +
+    ggplot2::labs(
+      x = "Time",
+      y = "Number of Patients",
+      color = "Condition Concept ID"
+    )
+}
+
+#' Plot condition occurrence trends
+#'
+#' Takes output from the `extractPatients()` function as input and returns a plot with the number of patients per year (default) or per month for each condition in "data".
+#' Internally calls `prepareTrendData()` and `plotPreparedData()`.
+#'
+#' @param extractedCounts A data.frame with
+#'   `condition_concept_id`, `year`, `month`, `n_patients`.
+#' @param byMonth Logical. If TRUE, plot by year_month; otherwise by year.
+#' @param conditionConceptId Optional. One or more concept IDs to filter.
+#'
+#' @return A ggplot object.
+#' @export
+#'
+#' @examples
+#' df <- data.frame(
+#'   condition_concept_id = c(10, 10, 10, 20, 20, 20),
+#'   year  = c(2020, 2020, 2021, 2020, 2021, 2021),
+#'   month = c(1, 2, 1, 3, 1, 2),
+#'   n_patients = c(5, 8, 3, 10, 4, 7)
+#' )
+#'
+#' # Prepare monthly data
+#' plotTrend(df, byMonth = TRUE)
+#'
+#' # Prepare yearly aggregated data
+#' plotTrend(df, byMonth = FALSE)
+#'
+#' # Filter to a single concept
+#' plotTrend(df, conditionConceptId = 10)
+plotTrend <- function(data,
+                      byMonth = FALSE,
+                      conditionConceptId = NULL) {
+
+  plotDf <- prepareTrendData(
+    extractedCounts = data,
+    byMonth = byMonth,
+    conditionConceptId = conditionConceptId
+  )
+
+  plotPreparedData(plotDf)
 }

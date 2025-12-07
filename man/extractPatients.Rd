@@ -20,5 +20,10 @@ from a connected OMOP CDM database.
 SQL is translated using \code{SqlRender}, allowing support for multiple SQL dialects.
 }
 \examples{
+\dontrun{
+connectionDetails <- Eunomia::getEunomiaConnectionDetails()
+connection <- DatabaseConnector::connect(connectionDetails)
+
 df <- getConditionOccurrence(connection)
+}
 }

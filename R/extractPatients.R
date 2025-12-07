@@ -56,7 +56,12 @@ countPatients <- function(df) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' connectionDetails <- Eunomia::getEunomiaConnectionDetails()
+#' connection <- DatabaseConnector::connect(connectionDetails)
+#'
 #' df <- getConditionOccurrence(connection)
+#' }
 extractPatients <- function(connection, cdmSchema = NULL) {
   df <- getConditionOccurrence(connection, cdmSchema = cdmSchema)
   df <- processDates(df)
