@@ -60,7 +60,7 @@ plotPreparedData <- function(plotDf) {
     data = plotDf,
     ggplot2::aes(x = .data$x,
                  y = .data$n_patients,
-                 color = .data$condition_concept_id,
+                 color = as.factor(.data$condition_concept_id),
                  group = .data$condition_concept_id)
     ) +
     ggplot2::geom_line() +
