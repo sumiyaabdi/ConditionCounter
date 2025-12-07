@@ -7,12 +7,12 @@
 plotTrend(data, byMonth = FALSE, conditionConceptId = NULL)
 }
 \arguments{
+\item{data}{A data.frame with
+\code{condition_concept_id}, \code{year}, \code{month}, \code{n_patients}.}
+
 \item{byMonth}{Logical. If TRUE, plot by year_month; otherwise by year.}
 
 \item{conditionConceptId}{Optional. One or more concept IDs to filter.}
-
-\item{extractedCounts}{A data.frame with
-\code{condition_concept_id}, \code{year}, \code{month}, \code{n_patients}.}
 }
 \value{
 A ggplot object.

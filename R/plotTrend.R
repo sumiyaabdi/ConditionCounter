@@ -78,7 +78,7 @@ plotPreparedData <- function(plotDf) {
 #' Takes output from the `extractPatients()` function as input and returns a plot with the number of patients per year (default) or per month for each condition in "data".
 #' Internally calls `prepareTrendData()` and `plotPreparedData()`.
 #'
-#' @param extractedCounts A data.frame with
+#' @param data A data.frame with
 #'   `condition_concept_id`, `year`, `month`, `n_patients`.
 #' @param byMonth Logical. If TRUE, plot by year_month; otherwise by year.
 #' @param conditionConceptId Optional. One or more concept IDs to filter.
