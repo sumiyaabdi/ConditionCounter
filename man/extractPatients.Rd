@@ -4,15 +4,17 @@
 \alias{extractPatients}
 \title{Get condition_occurrence table from OMOP CDM connection}
 \usage{
-extractPatients(connection, cdmSchema = NULL)
+extractPatients(connection, cdmSchema = NULL, addNames = FALSE)
 }
 \arguments{
 \item{connection}{A DatabaseConnector connection object}
 
 \item{cdmSchema}{Optional. A schema name.}
+
+\item{addNames}{Optional. Bool whether to add \code{concept_name} column}
 }
 \value{
-A data.frame with columns \code{condition_concept_id}, \code{year}, \code{month}, \code{n_patients}
+A data.frame with columns \code{condition_concept_id}, \code{year}, \code{month}, \code{n_patients} and optionally \code{concept_name}.
 }
 \description{
 #' Retrieves the \code{condition_occurrence} table (or selected columns)
