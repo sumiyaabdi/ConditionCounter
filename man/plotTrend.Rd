@@ -4,10 +4,10 @@
 \alias{plotTrend}
 \title{Plot condition occurrence trends}
 \usage{
-plotTrend(data, byMonth = FALSE, conditionConceptId = NULL)
+plotTrend(occurrences, byMonth = FALSE, conditionConceptId = NULL)
 }
 \arguments{
-\item{data}{A data.frame with
+\item{occurrences}{A data.frame with
 \code{condition_concept_id}, \code{year}, \code{month}, \code{n_patients}.}
 
 \item{byMonth}{Logical. If TRUE, plot by year_month; otherwise by year.}
@@ -19,7 +19,7 @@ A ggplot object.
 }
 \description{
 Takes output from the \code{extractPatients()} function as input and returns a plot with the number of patients per year (default) or per month for each condition in "data".
-Internally calls \code{prepareTrendData()} and \code{plotPreparedData()}.
+Internally calls \code{prepareTrends()} and \code{plotPreparedTrends()}.
 }
 \examples{
 df <- data.frame(

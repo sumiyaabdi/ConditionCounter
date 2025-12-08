@@ -17,8 +17,7 @@ extractPatients(connection, cdmSchema = NULL, addNames = FALSE)
 A data.frame with columns \code{condition_concept_id}, \code{year}, \code{month}, \code{n_patients} and optionally \code{concept_name}.
 }
 \description{
-#' Retrieves the \code{condition_occurrence} table (or selected columns)
-from a connected OMOP CDM database.
+#' Retrieves the \code{condition_occurrence} table from a connected OMOP CDM database.
 SQL is translated using \code{SqlRender}, allowing support for multiple SQL dialects.
 }
 \examples{
