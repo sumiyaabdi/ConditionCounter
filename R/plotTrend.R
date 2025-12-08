@@ -1,4 +1,4 @@
-#' Prepare trend data for plotting
+#' Prepare data for plotting
 #'
 #' Internal helper that cleans and aggregates condition occurrence counts
 #' prior to plotting. Most users should instead call [plotTrend()].
@@ -17,7 +17,7 @@ prepareTrendData <- function(data,
                              byMonth = FALSE,
                              conditionConceptId = NULL) {
   # assert columns are in input
-  stopifnot(all(c("condition_concept_id", "year", "month", "n_patients") %in% names(data)))
+  stopifnot(all(c("condition_concept_id", "year", "n_patients") %in% names(data)))
 
   # filter dataframe if specified
   if (!is.null(conditionConceptId)) {
@@ -27,6 +27,7 @@ prepareTrendData <- function(data,
 
   # prep data to either be by month or year
   if (byMonth) {
+    stopifnot("month" %in% names(data))
     plotDf <- data |>
       dplyr::mutate(x = paste(year, month, sep = "_")) |>
       dplyr::select(x, n_patients, condition_concept_id)

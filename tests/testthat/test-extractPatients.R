@@ -31,10 +31,9 @@ test_that("extractPatients returns counts", {
   df <- extractPatients(connection)
 
   expect_true(is.data.frame(df))
-  expect_true(all(c("condition_concept_id", "year", "month", "n_patients") %in% colnames(df)))
+  expect_all_true(c("condition_concept_id", "year", "month", "n_patients") %in% colnames(df))
   expect_type(df$year, "double")
   expect_type(df$month, "double")
   expect_true(all(df$n_patients > 0))
   expect_true(nrow(df) > 0)
-
 })

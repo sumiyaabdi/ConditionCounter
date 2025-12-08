@@ -63,7 +63,7 @@ countPatients <- function(df) {
 #' df <- getConditionOccurrence(connection)
 #' }
 extractPatients <- function(connection, cdmSchema = NULL) {
-  df <- getConditionOccurrence(connection, cdmSchema = cdmSchema)
+  df <- getConditionOccurrence(connection = connection, cdmSchema = cdmSchema)
   df <- processDates(df)
   df_counts <- countPatients(df)
   return(df_counts)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotTrend.R
 \name{prepareTrendData}
 \alias{prepareTrendData}
-\title{Prepare trend data for plotting}
+\title{Prepare data for plotting}
 \usage{
 prepareTrendData(data, byMonth = FALSE, conditionConceptId = NULL)
 }

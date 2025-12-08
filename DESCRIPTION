@@ -9,12 +9,12 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports:
-  rlang,
-  DatabaseConnector,
-  SqlRender,
-  stats,
-  ggplot2,
-  dplyr,
+    DatabaseConnector,
+    SqlRender,
+    stats,
+    ggplot2,
+    dplyr,
+    shiny
 Suggests: 
     testthat (>= 3.0.0),
     Eunomia
