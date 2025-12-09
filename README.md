@@ -4,6 +4,19 @@
 
 An R package for getting and plotting condition occurrences from a an [OMOP CDM](https://ohdsi.github.io/CommonDataModel/cdm54.html) database.
 
+## To install
+
+Make sure you install the package. This will ensure all the dependencies are present.
+
+``` r
+install.packages("remotes")
+remotes::install_github("sumiyaabdi/ConditionCounter")
+```
+
+## To run
+
+You can source `codeToRun.R`, or run the functions one by one.
+
 ## Features
 
 -   Takes a `DatabaseConnector::connection` as input
