@@ -5,6 +5,7 @@
 #' @returns Runs the shiny application
 #' @export
 launchShinyApp <- function() {
+  appDir <- system.file("shiny", package = "ConditionCounter")
 
-  shiny::runApp('inst/shiny', display.mode = "normal")
+  shiny::runApp(appDir, display.mode = "normal")
 }
