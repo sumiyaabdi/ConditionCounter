@@ -6,11 +6,5 @@
 #' @export
 launchShinyApp <- function() {
 
-  appDir <- system.file("shiny", package = utils::packageName())
-
-  if (appDir == "") {
-    stop("Could not find Shiny app directory. Try re-installing the package.", call. = FALSE)
-  }
-
-  shiny::runApp(appDir, display.mode = "normal")
+  shiny::runApp('inst/shiny', display.mode = "normal")
 }
