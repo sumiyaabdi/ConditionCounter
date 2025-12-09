@@ -1,6 +1,4 @@
-# R programmer for Health Data Science
-
-Welcome to the round of the recruitment process for R programmer for Health Data Science
+# Health Data Science Project
 
 ## Exercise
 
@@ -10,11 +8,11 @@ Familiarize yourself with the [OMOP CDM](https://ohdsi.github.io/CommonDataModel
 
 The exercise involves the following:
 
-Create an R package that exports the following functions:
+This R package that exports the following functions:
 
 1.  `extractPatients(connection)`
 
-This function should take a database connection as input, and extract counts of all conditions by year and month from the condition occurence table in the OMOP CDM database. The function should be able to do this for different sql dialects using the [SqlRender R package](https://ohdsi.github.io/SqlRender/). It should return a data.frame with the data needed for the `plotTrend` function.
+This function takes a database connection as input, and extract counts of all conditions by year and month from the condition occurence table in the OMOP CDM database. The function is be able to do this for different sql dialects using the [SqlRender R package](https://ohdsi.github.io/SqlRender/). It returns a data.frame with the data needed for the `plotTrend` function.
 
 2.  `plotTrend(data, byMonth = FALSE)`
 
@@ -22,7 +20,7 @@ This function should take a database connection as input, and extract counts of 
 
 3.  `launchShinyApp()`
 
-Create a simple shiny app should have a pulldown menu to filter the data by condition and a checkbox (boolean input) for the `byMonth` parameter in `plotTrend`. The app should then plot the frequency of the selected condition by the selected time frame (Year or Month). `launchShinyApp` should start the shiny app contained in the R package.
+This simple shiny app has a pulldown menu to filter the data by condition and a checkbox (boolean input) for the `byMonth` parameter in `plotTrend`. The app then plots the frequency of the selected condition by the selected time frame (Year or Month). `launchShinyApp` should start the shiny app contained in the R package.
 
 Creating the Shiny App will give you extra points.
 

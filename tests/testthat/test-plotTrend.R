@@ -15,9 +15,9 @@ test_that("prepareTrends produces monthly x column when byMonth = TRUE", {
   plotDf <- prepareTrends(df, byMonth = TRUE)
 
   expect_true(is.data.frame(plotDf))
-  expect_equal(plotDf$x, c("2020_1", "2020_2"))
+  expect_equal(plotDf$x, as.Date(c("2020-01-01", "2020-02-01")))
   expect_equal(plotDf$n_patients, c(5, 7))
-  expect_equal(plotDf$condition_concept_id, c(10, 10))
+  expect_equal(plotDf$grouping, c(10, 10))
 })
 
 test_that("prepareTrends aggregates correctly by year", {
@@ -43,7 +43,7 @@ test_that("prepareTrends filters by conditionConceptId", {
   )
 
   out <- prepareTrends(df, conditionConceptId = 10)
-  expect_all_true(out$condition_concept_id == 10)
+  expect_all_true(out$grouping == 10)
 })
 
 test_that("plotPreparedTrends returns a ggplot object", {

@@ -4,7 +4,12 @@
 \alias{plotTrend}
 \title{Plot condition occurrence trends}
 \usage{
-plotTrend(occurrences, byMonth = FALSE, conditionConceptId = NULL)
+plotTrend(
+  occurrences,
+  byMonth = FALSE,
+  conditionConceptId = NULL,
+  conditionName = NULL
+)
 }
 \arguments{
 \item{occurrences}{A data.frame with
@@ -13,6 +18,8 @@ plotTrend(occurrences, byMonth = FALSE, conditionConceptId = NULL)
 \item{byMonth}{Logical. If TRUE, plot by year_month; otherwise by year.}
 
 \item{conditionConceptId}{Optional. One or more concept IDs to filter.}
+
+\item{conditionName}{Optional. One or more \code{concept_names} from the OMOP CDM \code{concept} table}
 }
 \value{
 A ggplot object.

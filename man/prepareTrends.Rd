@@ -4,7 +4,12 @@
 \alias{prepareTrends}
 \title{Prepare occurrence data for plotting}
 \usage{
-prepareTrends(occurrences, byMonth = FALSE, conditionConceptId = NULL)
+prepareTrends(
+  occurrences,
+  byMonth = FALSE,
+  conditionConceptId = NULL,
+  conditionName = NULL
+)
 }
 \arguments{
 \item{occurrences}{A data.frame containing the columns:
@@ -14,6 +19,8 @@ prepareTrends(occurrences, byMonth = FALSE, conditionConceptId = NULL)
 If FALSE, rows are aggregated by year.}
 
 \item{conditionConceptId}{Optional vector of condition concept IDs to filter.}
+
+\item{conditionName}{Optional list of condition names}
 }
 \value{
 A data.frame containing \code{x}, \code{n_patients},
