@@ -13,6 +13,12 @@ install.packages("remotes")
 remotes::install_github("sumiyaabdi/ConditionCounter")
 ```
 
+Or if installing from within the folder:
+
+```r
+devtools::install()
+```
+
 ## To run
 
 You can source `codeToRun.R`, or run the functions one by one.
