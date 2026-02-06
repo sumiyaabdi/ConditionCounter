@@ -36,7 +36,7 @@ prepareTrends <- function(occurrences,
       dplyr::rename(grouping = concept_name)
   }
 
-  # rename column if not being filtered
+  # rename column if not being filtered, default to grouping by condition_concept_id
   if (!"grouping" %in% names(occurrences)) {
     occurrences <- occurrences |>
       dplyr::rename(grouping = condition_concept_id)
@@ -45,8 +45,11 @@ prepareTrends <- function(occurrences,
   # aggregate over selected time
   if (byMonth) {
     stopifnot("month" %in% names(occurrences))
+    months <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
     trends <- occurrences |>
-      dplyr::mutate(x = as.Date(sprintf("%04d-%02d-01", year, month))) |>
+      dplyr::group_by(grouping, month) |>
+      dplyr::summarise(n_patients = sum(n_patients), .groups = "drop") |>
+      dplyr::mutate(x = factor(month)) |>
       dplyr::select(x, n_patients, grouping)
   }
   else {
